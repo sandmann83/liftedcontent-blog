@@ -1,0 +1,9 @@
+.directory
+.metadata
+*~
+target
+.classpath
+.project
+.settings
+*.db
+.cache
