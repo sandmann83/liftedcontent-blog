@@ -16,6 +16,7 @@ import scala.xml.NodeSeq
 import de.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
+import de.sbradl.liftedcontent.microformats.snippet.Atom
 
 class BlogPost(post: PostContent) {
 
@@ -24,6 +25,7 @@ class BlogPost(post: PostContent) {
   def render = {
     dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT, S.locale)
 
+    "*" #> Atom.entry &
     "* *" #> renderPost(post)
   }
 
@@ -47,15 +49,19 @@ class BlogPost(post: PostContent) {
     }
 
     "data-lift-id=title *" #> post.title.is &
+    Atom.title("data-lift-id=title") &
       "data-lift-id=manage *" #> {
         "data-lift-id=edit [href]" #> editLink(metaPost.id.is) &
           "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
       } &
       "data-lift-id=author *" #> author.name &
+      Atom.author("data-lift-id=author") &
       "data-lift-id=translator *" #> post.translator.obj.open_!.name &
       "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
+      Atom.date("data-lift-id=createdAt", dateFormat.format(post.createdAt.is)) &
       "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
       "data-lift-id=text" #> TextileParser.toHtml(post.text.is) &
+      Atom.content &
       renderComments(metaPost)
 
   }
