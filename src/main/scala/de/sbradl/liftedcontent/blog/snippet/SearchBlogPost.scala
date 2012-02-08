@@ -14,8 +14,8 @@ import net.liftweb.util.Helpers.strToCssBindPromoter
 import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.util.StringPromotable.jsCmdToStrPromo
 import net.liftweb.http.js.JsCmds
-import eu.sbradl.autocomplete.AutoComplete
 import net.liftweb.mapper.MaxRows
+import eu.sbradl.autocomplete.AutoComplete
 
 class SearchBlogPost {
 
