@@ -9,8 +9,6 @@ import net.liftweb.sitemap.LocPath.stringToLocPath
 import net.liftweb.sitemap.Loc.Hidden
 import net.liftweb.sitemap.Loc.LocGroup
 import net.liftweb.sitemap.Menu
-import de.sbradl.liftedcontent.util.Module
-import de.sbradl.liftedcontent.core.lib.ACL
 import net.liftweb.sitemap.Loc.LinkText
 import scala.xml.Text
 import net.liftweb.mapper.By
@@ -23,6 +21,8 @@ import net.liftweb.http.RewriteResponse
 import lib.PostHelpers
 import net.liftweb.widgets.autocomplete.AutoComplete
 import net.liftweb.common.Full
+import de.sbradl.liftedcontent.util.Module
+import de.sbradl.liftedcontent.core.lib.ACL
 
 class BlogModule extends Module {
 
