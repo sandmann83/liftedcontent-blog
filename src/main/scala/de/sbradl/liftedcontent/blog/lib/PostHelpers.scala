@@ -30,6 +30,7 @@ object PostHelpers {
   }
   
   def plainText(post: PostContent) = TextileParser.toHtml(post.title).text + ": " + TextileParser.toHtml(post.text).text
+  def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text).text
 
   def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title)
 
