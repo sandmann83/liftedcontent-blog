@@ -12,6 +12,10 @@ import scala.xml.Text
 import java.util.regex.Matcher
 import net.liftweb.http.S
 import net.liftweb.common.Full
+import net.liftweb.mapper.Cmp
+import net.liftweb.mapper.OprEnum
+import net.liftweb.mapper.BySql
+import net.liftweb.mapper.IHaveValidatedThisSQL
 
 object PostHelpers {
 
@@ -38,11 +42,11 @@ object PostHelpers {
 
   private def searchForTitle(term: String) = PostContent.findAll(
     By(PostContent.published, true),
-    Like(PostContent.title, "%" + term + "%"))
+    Cmp(PostContent.title, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   private def searchForText(term: String) = PostContent.findAll(
     By(PostContent.published, true),
-    Like(PostContent.text, "%" + term + "%"))
+    Cmp(PostContent.text, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   def summary(post: PostContent, desiredSentences: Int = 3, maxCharacters: Int = 100) = {
     val fullText = post.text.is

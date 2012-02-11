@@ -17,11 +17,11 @@ class BlogSearchResults(searchTerm: String) {
       "data-lift-id=result" #> posts.map {
         post =>
           {
-            val matches = (Count(searchTerm) in post.title) + (Count(searchTerm) in post.text)
-            "data-lift-id=link *" #> (Highlight(searchTerm) in post.title) &
+            val matches = (Count(searchTerm, false) in post.title) + (Count(searchTerm, false) in post.text)
+            "data-lift-id=link *" #> (Highlight(searchTerm, false) in post.title) &
             "data-lift-id=matches *" #> matches &
             "data-lift-id=link [href]" #> PostHelpers.linkTo(post) &
-            "data-lift-id=preview *" #> (Highlight(searchTerm) in PostHelpers.summary(post))
+            "data-lift-id=preview *" #> (Highlight(searchTerm, false) in PostHelpers.summary(post))
           }
       }
   }
