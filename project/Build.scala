@@ -16,7 +16,8 @@ object BlogBuild extends Build {
       "net.liftweb" %% "lift-widgets" % liftVersion % "compile->default" withSources,
       "eu.sbradl" %% "liftedcontent-autocomplete" % "1.0.0" % "compile",
       "eu.sbradl" %% "liftedcontent-util" % "1.0.0" % "compile",
-      "eu.sbradl" %% "liftedcontent-core" % "1.0.0" % "compile"
+      "eu.sbradl" %% "liftedcontent-core" % "1.0.0" % "compile",
+      "eu.sbradl" %% "liftedcontent-microformats" % "1.0.0" % "compile"
     )
   )
 
