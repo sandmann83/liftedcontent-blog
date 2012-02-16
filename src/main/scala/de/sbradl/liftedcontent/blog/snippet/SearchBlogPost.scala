@@ -18,9 +18,7 @@ import net.liftweb.mapper.MaxRows
 import eu.sbradl.autocomplete.AutoComplete
 
 class SearchBlogPost {
-
-//  def data(limit: Int) = PostContent.findAll(By(PostContent.published, true), MaxRows(limit)).map(_.title.is)
-
+  
   def process(name: String): JsCmd = name.isEmpty match {
     case true => JsCmds.Noop
     case false => {
