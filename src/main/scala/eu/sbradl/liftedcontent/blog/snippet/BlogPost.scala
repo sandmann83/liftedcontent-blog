@@ -58,8 +58,9 @@ class BlogPost(post: PostContent) {
       Atom.author("data-lift-id=author") &
       "data-lift-id=translator *" #> post.translator.obj.open_!.name &
       "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
-      Atom.date("data-lift-id=createdAt", dateFormat.format(post.createdAt.is)) &
+      Atom.published("data-lift-id=createdAt", dateFormat.format(post.createdAt.is)) &
       "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
+      Atom.updated("data-lift-id=updatedAt", dateFormat.format(post.updatedAt.is)) &
       "data-lift-id=text" #> TextileParser.toHtml(post.text.is) &
       Atom.content &
       renderComments(metaPost)
