@@ -1,21 +1,20 @@
-package de.sbradl.liftedcontent.blog.lib
+package eu.sbradl.liftedcontent.blog.lib
 
-import de.sbradl.liftedcontent.blog.model.PostContent
-import net.liftweb.mapper.OrderBy
-import net.liftweb.mapper.Descending
-import net.liftweb.util.Helpers._
-import net.liftweb.util.StringHelpers
-import net.liftweb.mapper.By
-import net.liftweb.mapper.Like
-import net.liftweb.textile.TextileParser
+import eu.sbradl.liftedcontent.blog.model.PostContent
+
 import scala.xml.Text
-import java.util.regex.Matcher
-import net.liftweb.http.S
+
+import net.liftweb.common.Box.option2Box
 import net.liftweb.common.Full
+import net.liftweb.http.S
+import net.liftweb.mapper.MappedField.mapToType
+import net.liftweb.mapper.By
 import net.liftweb.mapper.Cmp
+import net.liftweb.mapper.Descending
 import net.liftweb.mapper.OprEnum
-import net.liftweb.mapper.BySql
-import net.liftweb.mapper.IHaveValidatedThisSQL
+import net.liftweb.mapper.OrderBy
+import net.liftweb.textile.TextileParser
+import net.liftweb.util.Helpers.urlEncode
 
 object PostHelpers {
 

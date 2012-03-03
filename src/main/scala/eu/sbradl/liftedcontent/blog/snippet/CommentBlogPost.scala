@@ -1,7 +1,9 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
-import de.sbradl.liftedcontent.blog.model.Comment
-import de.sbradl.liftedcontent.blog.model.PostContent
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.model.Comment
+import eu.sbradl.liftedcontent.blog.model.PostContent
+
 import de.sbradl.liftedcontent.core.model.User
 import net.liftweb.http.js.JsCmd.unitToJsCmd
 import net.liftweb.http.js.JsCmd
@@ -11,7 +13,6 @@ import net.liftweb.mapper.MappedForeignKey.getObj
 import net.liftweb.util.Helpers.nextFuncName
 import net.liftweb.util.Helpers.strToCssBindPromoter
 import net.liftweb.util.StringPromotable.jsCmdToStrPromo
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
 
 class CommentBlogPost(postContent: PostContent) {
   val post = postContent.post.open_!

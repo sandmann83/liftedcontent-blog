@@ -1,19 +1,25 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
-import net.liftweb.util.Helpers._
-import net.liftweb.http.S
-import de.sbradl.liftedcontent.blog.model.PostContent
-import net.liftweb.util.TimeHelpers
-import net.liftweb.mapper.OrderBy
-import net.liftweb.mapper.Descending
-import scala.collection.SortedMap
-import java.util.Date
-import java.text.DateFormat
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.model.PostContent
+
 import java.util.Calendar
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
-import scala.xml.Text
-import net.liftweb.mapper.By
+import java.util.Date
+
+import scala.collection.SortedMap
+
 import de.sbradl.liftedcontent.core.lib.ACL
+import net.liftweb.http.S
+import net.liftweb.mapper.MappedField.mapToType
+import net.liftweb.mapper.By
+import net.liftweb.mapper.Descending
+import net.liftweb.mapper.OrderBy
+import net.liftweb.util.Helpers.TimeSpan.dateToTS
+import net.liftweb.util.Helpers.TimeSpan
+import net.liftweb.util.Helpers.now
+import net.liftweb.util.Helpers.strToCssBindPromoter
+import net.liftweb.util.IterableConst.itNodeSeqFunc
+import net.liftweb.util.TimeHelpers
 
 class BlogArchive {
 

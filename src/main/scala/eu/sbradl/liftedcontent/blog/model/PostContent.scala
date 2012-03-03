@@ -1,4 +1,4 @@
-package de.sbradl.liftedcontent.blog.model
+package eu.sbradl.liftedcontent.blog.model
 
 import de.sbradl.liftedcontent.core.model.User
 import net.liftweb.mapper._

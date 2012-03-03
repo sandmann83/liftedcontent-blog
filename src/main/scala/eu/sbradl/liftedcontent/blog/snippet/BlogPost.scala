@@ -1,7 +1,7 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
-import de.sbradl.liftedcontent.blog.model.Post
-import de.sbradl.liftedcontent.blog.model.PostContent
+import eu.sbradl.liftedcontent.blog.model.Post
+import eu.sbradl.liftedcontent.blog.model.PostContent
 import net.liftweb.mapper._
 import net.liftweb.util.Helpers._
 import net.liftweb.http._
@@ -9,7 +9,7 @@ import de.sbradl.liftedcontent.core.model.User
 import de.sbradl.liftedcontent.core.lib.ACL
 import scala.xml.Text
 import java.text.DateFormat
-import de.sbradl.liftedcontent.blog.model.Comment
+import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
 import net.liftweb.textile.TextileParser
 import scala.xml.NodeSeq

@@ -1,14 +1,19 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
+
+import de.sbradl.liftedcontent.core.model.User
+
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.model.Post
+import eu.sbradl.liftedcontent.blog.model.PostContent
 
 import java.util.Locale
-import de.sbradl.liftedcontent.blog.model.Post
-import de.sbradl.liftedcontent.blog.model.PostContent
+
+import scala.Array.canBuildFrom
+
+import net.liftweb.http.SHtml.PairStringPromoter.funcPromote
 import net.liftweb.http.LiftScreen
 import net.liftweb.http.S
-import net.liftweb.http.SHtml
-import net.liftweb.util.FieldContainer
-import de.sbradl.liftedcontent.core.model.User
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
+import net.liftweb.util.AnyVar.whatVarIs
 
 class AddBlogPost extends LiftScreen {
   

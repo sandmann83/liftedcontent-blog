@@ -1,9 +1,9 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
-import net.liftweb.util.Helpers._
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
+
 import net.liftweb.common.Full
-import scala.xml.NodeSeq
+import net.liftweb.util.Helpers.strToCssBindPromoter
 
 class LatestBlogPost {
 

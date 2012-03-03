@@ -1,8 +1,13 @@
-package de.sbradl.liftedcontent.blog.model
+package eu.sbradl.liftedcontent.blog.model
 
 import de.sbradl.liftedcontent.core.model.User
-import net.liftweb.mapper._
 import net.liftweb.http.S
+import net.liftweb.mapper.CreatedUpdated
+import net.liftweb.mapper.IdPK
+import net.liftweb.mapper.LongKeyedMapper
+import net.liftweb.mapper.LongKeyedMetaMapper
+import net.liftweb.mapper.MappedLongForeignKey
+import net.liftweb.mapper.MappedTextarea
 
 object Comment extends Comment with LongKeyedMetaMapper[Comment] {
   

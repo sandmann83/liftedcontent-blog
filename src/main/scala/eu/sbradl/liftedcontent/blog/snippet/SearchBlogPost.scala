@@ -1,21 +1,21 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
+
+import eu.sbradl.autocomplete.AutoComplete
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.model.PostContent
 
 import scala.xml.Text
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
-import de.sbradl.liftedcontent.blog.model.PostContent
+
 import net.liftweb.common.Full
 import net.liftweb.http.js.JE.ValById
 import net.liftweb.http.js.JsCmd
+import net.liftweb.http.js.JsCmds
 import net.liftweb.http.S
 import net.liftweb.http.SHtml
 import net.liftweb.mapper.By
-import net.liftweb.util.Helpers.nextFuncName
 import net.liftweb.util.Helpers.strToCssBindPromoter
 import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.util.StringPromotable.jsCmdToStrPromo
-import net.liftweb.http.js.JsCmds
-import net.liftweb.mapper.MaxRows
-import eu.sbradl.autocomplete.AutoComplete
 
 class SearchBlogPost {
   

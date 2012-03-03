@@ -1,6 +1,6 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
-import de.sbradl.liftedcontent.blog.model.Post
+import eu.sbradl.liftedcontent.blog.model.Post
 import net.liftweb.http.LiftScreen
 import net.liftweb.http.S
 

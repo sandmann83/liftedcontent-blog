@@ -1,7 +1,7 @@
-package de.sbradl.liftedcontent.blog.snippet
+package eu.sbradl.liftedcontent.blog.snippet
 
 import net.liftweb.util.Helpers._
-import de.sbradl.liftedcontent.blog.lib.PostHelpers
+import eu.sbradl.liftedcontent.blog.lib.PostHelpers
 import scala.xml.Text
 import net.liftweb.textile.TextileParser
 import de.sbradl.liftedcontent.util.Highlight
