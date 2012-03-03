@@ -1,11 +1,10 @@
 package eu.sbradl.liftedcontent.blog
 
-import eu.sbradl.liftedcontent.core.lib.ACL
-import eu.sbradl.liftedcontent.util.Module
-
 import eu.sbradl.liftedcontent.blog.model.Comment
 import eu.sbradl.liftedcontent.blog.model.Post
 import eu.sbradl.liftedcontent.blog.model.PostContent
+import eu.sbradl.liftedcontent.core.lib.ACL
+import eu.sbradl.liftedcontent.util.Module
 
 import scala.xml.Text
 
@@ -30,8 +29,6 @@ import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.util.NamedPF
 
 class BlogModule extends Module {
-
-  def name = "Blog"
 
   override def mappers = List(Post, PostContent, Comment)
 
