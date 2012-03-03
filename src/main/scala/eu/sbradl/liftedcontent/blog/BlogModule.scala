@@ -1,7 +1,7 @@
 package eu.sbradl.liftedcontent.blog
 
-import de.sbradl.liftedcontent.core.lib.ACL
-import de.sbradl.liftedcontent.util.Module
+import eu.sbradl.liftedcontent.core.lib.ACL
+import eu.sbradl.liftedcontent.util.Module
 
 import eu.sbradl.liftedcontent.blog.model.Comment
 import eu.sbradl.liftedcontent.blog.model.Post

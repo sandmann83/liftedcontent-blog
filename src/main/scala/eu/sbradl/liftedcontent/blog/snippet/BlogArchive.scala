@@ -8,7 +8,7 @@ import java.util.Date
 
 import scala.collection.SortedMap
 
-import de.sbradl.liftedcontent.core.lib.ACL
+import eu.sbradl.liftedcontent.core.lib.ACL
 import net.liftweb.http.S
 import net.liftweb.mapper.MappedField.mapToType
 import net.liftweb.mapper.By

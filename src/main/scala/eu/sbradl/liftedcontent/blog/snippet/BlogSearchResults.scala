@@ -4,8 +4,8 @@ import net.liftweb.util.Helpers._
 import eu.sbradl.liftedcontent.blog.lib.PostHelpers
 import scala.xml.Text
 import net.liftweb.textile.TextileParser
-import de.sbradl.liftedcontent.util.Highlight
-import de.sbradl.liftedcontent.util.Count
+import eu.sbradl.liftedcontent.util.Highlight
+import eu.sbradl.liftedcontent.util.Count
 
 class BlogSearchResults(searchTerm: String) {
 

@@ -5,8 +5,8 @@ import eu.sbradl.liftedcontent.blog.model.PostContent
 import net.liftweb.mapper._
 import net.liftweb.util.Helpers._
 import net.liftweb.http._
-import de.sbradl.liftedcontent.core.model.User
-import de.sbradl.liftedcontent.core.lib.ACL
+import eu.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.lib.ACL
 import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment

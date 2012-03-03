@@ -5,18 +5,18 @@ import eu.sbradl.liftedcontent.blog.model.PostContent
 import net.liftweb.mapper._
 import net.liftweb.util.Helpers._
 import net.liftweb.http._
-import de.sbradl.liftedcontent.core.model.User
-import de.sbradl.liftedcontent.core.lib.ACL
+import eu.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.lib.ACL
 import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
 import net.liftweb.textile.TextileParser
 import scala.xml.NodeSeq
-import de.sbradl.liftedcontent.util.OnConfirm
+import eu.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
-import de.sbradl.liftedcontent.microformats.snippet.Atom
+import eu.sbradl.liftedcontent.microformats.snippet.Atom
 
 class BlogPost(post: PostContent) {
 

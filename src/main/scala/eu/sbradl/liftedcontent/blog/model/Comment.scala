@@ -1,6 +1,6 @@
 package eu.sbradl.liftedcontent.blog.model
 
-import de.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.model.User
 import net.liftweb.http.S
 import net.liftweb.mapper.CreatedUpdated
 import net.liftweb.mapper.IdPK

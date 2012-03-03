@@ -1,6 +1,6 @@
 package eu.sbradl.liftedcontent.blog.snippet
 
-import de.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.model.User
 
 import eu.sbradl.liftedcontent.blog.lib.PostHelpers
 import eu.sbradl.liftedcontent.blog.model.Post

@@ -4,7 +4,7 @@ import eu.sbradl.liftedcontent.blog.lib.PostHelpers
 import eu.sbradl.liftedcontent.blog.model.Comment
 import eu.sbradl.liftedcontent.blog.model.PostContent
 
-import de.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.model.User
 import net.liftweb.http.js.JsCmd.unitToJsCmd
 import net.liftweb.http.js.JsCmd
 import net.liftweb.http.S

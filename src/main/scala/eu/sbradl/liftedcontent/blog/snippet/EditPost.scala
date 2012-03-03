@@ -1,7 +1,7 @@
 package eu.sbradl.liftedcontent.blog.snippet
 
 import eu.sbradl.liftedcontent.blog.model.Post
-import de.sbradl.liftedcontent.core.model.User
+import eu.sbradl.liftedcontent.core.model.User
 import eu.sbradl.liftedcontent.blog.model.PostContent
 import net.liftweb.http.LiftScreen
 import net.liftweb.http.S
