@@ -71,6 +71,12 @@ object PostHelpers {
     } else {
       summary = fullText.take(maxCharacters)
     }
+    
+    if(summary.endsWith(".")) {
+      summary = summary + ".."
+    } else {
+      summary = summary + "..."
+    }
 
     Text(TextileParser.toHtml(summary).text)
   }
