@@ -5,9 +5,7 @@ import eu.sbradl.liftedcontent.blog.model.Post
 import eu.sbradl.liftedcontent.blog.model.PostContent
 import eu.sbradl.liftedcontent.core.lib.ACL
 import eu.sbradl.liftedcontent.util.Module
-
 import scala.xml.Text
-
 import lib.PostHelpers
 import net.liftweb.common.Full
 import net.liftweb.http.LiftRulesMocker.toLiftRules
@@ -27,6 +25,7 @@ import net.liftweb.sitemap.Menu
 import net.liftweb.util.Helpers.urlDecode
 import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.util.NamedPF
+import eu.sbradl.liftedcontent.blog.lib.BlogRssFeed
 
 class BlogModule extends Module {
 
@@ -61,5 +60,7 @@ class BlogModule extends Module {
         RewriteResponse("blog" :: urlEncode(PostHelpers.latest.map(_.title.is).openOr("")) :: Nil)
       }
     })
+    
+    LiftRules.dispatch.append(BlogRssFeed)
   }
 }
