@@ -33,9 +33,9 @@ class BlogModule extends Module {
 
   override def menus = List(
     Menu.param[PostContent]("BLOG", 
-        new LinkText(p => Text(p.title)), 
+        new LinkText(p => Text(p.title.is)), 
         url => PostContent.find(By(PostContent.title, urlDecode(url))), 
-        p => urlEncode(p.title)) / "blog",
+        p => urlEncode(p.title.is)) / "blog",
         
     Menu.i("BLOG_ARCHIVE") / "blog" / "archive" >> LocGroup("primary") >> ACL.locParam("blog/archive"),
     

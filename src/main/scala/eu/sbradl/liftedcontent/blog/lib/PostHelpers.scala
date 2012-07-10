@@ -28,16 +28,16 @@ object PostHelpers {
       OrderBy(PostContent.createdAt, Descending))
   }
   
-  def plainText(post: PostContent) = TextileParser.toHtml(post.title).text + ": " + TextileParser.toHtml(post.text).text
-  def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text).text
+  def plainText(post: PostContent) = TextileParser.toHtml(post.title.is).text + ": " + TextileParser.toHtml(post.text.is).text
+  def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text.is).text
 
-  def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title)
+  def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title.is)
 
   def searchFor(term: String) = {
     val results = searchForTitle(term) ++ searchForText(term)
     val posts = results.distinct
     
-    posts.sortBy(post => post.title.split(term).size + post.text.split(term).size) reverse
+    posts.sortBy(post => post.title.is.split(term).size + post.text.is.split(term).size) reverse
   }
 
   private def searchForTitle(term: String) = PostContent.findAll(

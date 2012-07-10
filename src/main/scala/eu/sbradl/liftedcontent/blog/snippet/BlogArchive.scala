@@ -55,7 +55,7 @@ class BlogArchive {
         {
           val post = kv._2.head
 
-          "data-lift-id=header *" #> month(post.createdAt) &
+          "data-lift-id=header *" #> month(post.createdAt.get) &
             "data-lift-id=item" #> kv._2.map {
               post =>
                 {

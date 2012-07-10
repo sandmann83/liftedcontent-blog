@@ -17,8 +17,8 @@ class BlogSearchResults(searchTerm: String) {
       "data-lift-id=result" #> posts.map {
         post =>
           {
-            val matches = (Count(searchTerm, false) in post.title) + (Count(searchTerm, false) in post.text)
-            "data-lift-id=link *" #> (Highlight(searchTerm, false) in post.title) &
+            val matches = (Count(searchTerm, false) in post.title.is) + (Count(searchTerm, false) in post.text.is)
+            "data-lift-id=link *" #> (Highlight(searchTerm, false) in post.title.is) &
             "data-lift-id=matches *" #> matches &
             "data-lift-id=link [href]" #> PostHelpers.linkTo(post) &
             "data-lift-id=preview *" #> (Highlight(searchTerm, false) in PostHelpers.plainTextWithoutTitle(post))

@@ -47,9 +47,9 @@ class EditPost(post: Post) extends Wizard {
         case _ => PostContent.create.post(post).translator(user.is).language(language)
       }
       
-      title.set(content.title)
-      text.set(content.text)
-      published.set(content.published)
+      title.set(content.title.get)
+      text.set(content.text.get)
+      published.set(content.published.get)
     }
     
     val title = field(S ? "TITLE", "")
