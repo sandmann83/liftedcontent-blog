@@ -11,7 +11,7 @@ import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
-import net.liftweb.textile.TextileParser
+import net.liftmodules.textile.TextileParser
 
 class BlogPosts {
   
@@ -52,7 +52,7 @@ class BlogPosts {
 
     "data-name=title *" #> post.title.is &
       "data-name=author *" #> author.name &
-      "data-name=translator *" #> post.translator.obj.open_!.name &
+      "data-name=translator *" #> post.translator.obj.map(_.name).openOr("unknown") &
       "data-name=createdAt *" #> dateFormat.format(post.createdAt.is) &
       "data-name=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
       "data-name=text" #> TextileParser.toHtml(post.text.is) &

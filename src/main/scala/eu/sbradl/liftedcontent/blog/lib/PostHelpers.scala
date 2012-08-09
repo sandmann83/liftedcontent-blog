@@ -13,7 +13,7 @@ import net.liftweb.mapper.Cmp
 import net.liftweb.mapper.Descending
 import net.liftweb.mapper.OprEnum
 import net.liftweb.mapper.OrderBy
-import net.liftweb.textile.TextileParser
+import net.liftmodules.textile.TextileParser
 import net.liftweb.util.Helpers.urlEncode
 
 object PostHelpers {

@@ -3,7 +3,7 @@ package eu.sbradl.liftedcontent.blog.snippet
 import net.liftweb.util.Helpers._
 import eu.sbradl.liftedcontent.blog.lib.PostHelpers
 import scala.xml.Text
-import net.liftweb.textile.TextileParser
+import net.liftmodules.textile.TextileParser
 import eu.sbradl.liftedcontent.util.Highlight
 import eu.sbradl.liftedcontent.util.Count
 
