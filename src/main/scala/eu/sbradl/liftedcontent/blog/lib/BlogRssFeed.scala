@@ -19,7 +19,7 @@ object BlogRssFeed extends RestHelper {
 
       RssFeed[PostContent](S.hostName + " Blog", S.hostAndPath,
         S.hostName + " Blog", S.locale.toString, posts.head.translator.map(_.name).openOr("Unknown"),
-        posts, _.title.get, PostHelpers.summary(_, 2, 200).text,
+        posts, _.title.get, PostHelpers.summary(_, 2, 200),
         S.hostAndPath + PostHelpers.linkTo(_),
         p => "%s, %s".format(p.translator.map(_.name).openOr("Unknown"), p.translator.map(_.email).openOr("Unknown")),
         p => LiftRules.dateTimeConverter.vend.formatDateTime(p.createdAt.get))

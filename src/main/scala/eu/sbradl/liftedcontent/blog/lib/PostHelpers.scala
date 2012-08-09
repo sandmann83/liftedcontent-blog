@@ -15,6 +15,7 @@ import net.liftmodules.textile.TextileParser
 import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.mapper.StartAt
 import net.liftweb.mapper.MaxRows
+import scala.xml.Unparsed
 
 object PostHelpers {
 
@@ -56,7 +57,7 @@ object PostHelpers {
     Cmp(PostContent.text, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   def summary(post: PostContent, desiredSentences: Int = 3, maxCharacters: Int = 100) = {
-    val fullText = post.text.is.replaceAll("""<(?!\/?a(?=>|\s.*>))\/?.*?>""", "") 
+    val fullText = post.text.is.replaceAll("""<(?!\/?(?=>|\s.*>))\/?.*?>""", " ").trim
 
     val punctuationMarks = List('.', '!', '?')
 
@@ -85,7 +86,8 @@ object PostHelpers {
       summary = summary + "..."
     }
 
-    Text(summary)
+    summary
   }
+  
 
 }
