@@ -28,8 +28,9 @@ import net.liftweb.util.NamedPF
 import eu.sbradl.liftedcontent.blog.lib.BlogRssFeed
 import net.liftweb.http.Req
 import eu.sbradl.liftedcontent.core.model.User
-import net.liftweb.util.Helpers._ 
+import net.liftweb.util.Helpers._
 import eu.sbradl.liftedcontent.blog.lib.BlogServices
+import eu.sbradl.liftedcontent.core.lib.AdditionalUrls
 
 class BlogModule extends Module {
 
@@ -57,6 +58,8 @@ class BlogModule extends Module {
 
   override def init {
     super.init
+    
+    AdditionalUrls.urlCalculators.append(() => PostContent.findAll.map(PostHelpers.linkTo(_).replaceFirst("/", "")))
 
     LiftRules.statefulRewrite.prepend(NamedPF("LatestBlogPostRewrite") {
       case RewriteRequest(

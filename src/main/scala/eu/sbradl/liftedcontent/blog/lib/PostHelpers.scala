@@ -16,6 +16,8 @@ import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.mapper.StartAt
 import net.liftweb.mapper.MaxRows
 import scala.xml.Unparsed
+import eu.sbradl.liftedcontent.util.WordDensity
+import scala.collection.immutable.SortedMap
 
 object PostHelpers {
 
@@ -36,7 +38,7 @@ object PostHelpers {
 		  StartAt(1),
 		  MaxRows(n))
   
-  def plainText(post: PostContent) = TextileParser.toHtml(post.title.is).text + ": " + TextileParser.toHtml(post.text.is).text
+//  def plainText(post: PostContent) = TextileParser.toHtml(post.title.is).text + ": " + TextileParser.toHtml(post.text.is).text
   def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text.is).text
 
   def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title.is)
@@ -57,7 +59,7 @@ object PostHelpers {
     Cmp(PostContent.text, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   def summary(post: PostContent, desiredSentences: Int = 3, maxCharacters: Int = 100) = {
-    val fullText = post.text.is.replaceAll("""<(?!\/?(?=>|\s.*>))\/?.*?>""", " ").trim
+    val fullText = plainText(post)
 
     val punctuationMarks = List('.', '!', '?')
 
@@ -89,5 +91,18 @@ object PostHelpers {
     summary
   }
   
+  def keywords(post: PostContent, maxNumKeywords: Int = 5): List[String] = {
+    var densities = WordDensity.forText(plainText(post))
+   
+    def filterWordsStartingWithALetter(words: Map[String, Int]) = {
+      words.filterKeys(w => w.charAt(0).isLetter)
+    }
+    
+    densities = filterWordsStartingWithALetter(densities)
+    
+    densities.toList.sortBy(_._2).takeRight(maxNumKeywords).map(_._1)
+  }
+  
+  def plainText(post: PostContent) = post.text.is.replaceAll("""<(?!\/?(?=>|\s.*>))\/?.*?>""", " ").trim
 
 }
