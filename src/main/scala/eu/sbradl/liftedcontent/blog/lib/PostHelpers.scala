@@ -49,7 +49,7 @@ object PostHelpers {
     Cmp(PostContent.text, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   def summary(post: PostContent, desiredSentences: Int = 3, maxCharacters: Int = 100) = {
-    val fullText = post.text.is
+    val fullText = post.text.is.replaceAll("""<(?!\/?a(?=>|\s.*>))\/?.*?>""", "") 
 
     val punctuationMarks = List('.', '!', '?')
 
@@ -78,7 +78,7 @@ object PostHelpers {
       summary = summary + "..."
     }
 
-    Text(TextileParser.toHtml(summary).text)
+    Text(summary)
   }
 
 }

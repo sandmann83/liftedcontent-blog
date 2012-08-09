@@ -11,7 +11,6 @@ import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
-import net.liftmodules.textile.TextileParser
 import scala.xml.NodeSeq
 import eu.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
@@ -20,6 +19,7 @@ import net.liftweb.util.ClearNodes
 import net.liftweb.common.Full
 import net.liftweb.common.Box
 import net.liftweb.util.PassThru
+import scala.xml.Unparsed
 
 class BlogPost(post: PostContent) {
 
@@ -31,42 +31,53 @@ class BlogPost(post: PostContent) {
     "* *" #> renderPost(post)
   }
 
+  def publish(post: PostContent): JsCmd = {
+    post.published(true)
+    post.save
+
+    S.notice(S ? "POST_PUBLISHED")
+  }
+
   def delete(post: PostContent): JsCmd = {
-	post.delete_!
-	
-	S.notice(S ? "ENTRY_DELETED")
-	
-	S.redirectTo("/")
+    post.delete_!
+
+    S.notice(S ? "ENTRY_DELETED")
+
+    S.redirectTo("/")
   }
 
   def renderPost(post: PostContent) = {
-    val metaPost = post.post.obj
-    val authorBox = metaPost.map(_.author.obj)
+    if (post.published.is == false && !User.currentUser.map(_.superUser.is).openOr(false)) {
+      "*" #> ClearNodes
+    } else {
+      val metaPost = post.post.obj
+      val authorBox = metaPost.map(_.author.obj)
 
-    val status = post.published.is match {
-      case true => S ? "BLOG_ENTRY_STATUS_PUBLISHED"
-      case false => S ? "BLOG_ENTRY_STATUS_UNPUBLISHED"
-    }
-    
-    authorBox match {
-      case Full(Full(author)) => {
-        "data-lift-id=title [id]" #> post.id.is &
-        "data-lift-id=title *" #> post.title.is &
-        "data-lift-id=author *" #> author.name &
-        "data-lift-id=translator *" #> post.translator.obj.map(_.name).openOr("Unknown") &
-        "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
-        "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
-        "data-lift-id=text" #> TextileParser.toHtml(post.text.is) & 
-         "data-lift-id=manage *" #> {
-              "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
-          } & (metaPost match {
-            case Full(mp) => renderComments(mp)
-            case _ => "*" #> PassThru
-          })
+      val status = post.published.is match {
+        case true => S ? "BLOG_ENTRY_STATUS_PUBLISHED"
+        case false => S ? "BLOG_ENTRY_STATUS_UNPUBLISHED"
       }
-      case _ => ClearNodes
-    }  
 
+      authorBox match {
+        case Full(Full(author)) => {
+          "data-lift-id=title [id]" #> post.id.is &
+            "data-lift-id=title *" #> post.title.is &
+            "data-lift-id=author *" #> author.name &
+            "data-lift-id=translator *" #> post.translator.obj.map(_.name).openOr("Unknown") &
+            "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
+            "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
+            "data-lift-id=text" #> Unparsed(post.text.is) &
+            "data-lift-id=manage *" #> {
+              "data-lift-id=publish [onclick]" #> SHtml.onEvent(s => publish(post)) &
+                "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
+            } & (metaPost match {
+              case Full(mp) => renderComments(mp)
+              case _ => "*" #> PassThru
+            })
+        }
+        case _ => ClearNodes
+      }
+    }
   }
 
   def renderComments(metaPost: Post) = metaPost.comments.isEmpty match {
