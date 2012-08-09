@@ -29,8 +29,6 @@ object BlogServices extends RestHelper {
         post.text(extractData(regions.tail.head)._2)
         post.save
 
-        S.notice("SAVED_CHANGES")
-
         new OkResponse
       }
       case _ => PlainTextResponse("invalid page id", 500)

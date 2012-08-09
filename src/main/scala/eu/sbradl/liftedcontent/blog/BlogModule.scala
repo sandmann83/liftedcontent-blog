@@ -52,7 +52,8 @@ class BlogModule extends Module {
       Menu.i("POST_BLOG_ENTRY") / "blog" / "post" >> LocGroup("primary") >> ACL.locParam("blog/post"),
       Menu.param[Post]("CommentBlogEntry", S ? "WRITE_COMMENT", Post.find, _.id.is.toString) / "blog" / "comment" >> Hidden >> ACL.locParam("blog/comment"),
       Menu.param[Post]("DeleteBlogEntry", S ? "DELETE_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "delete" >> Hidden >> ACL.locParam("blog/delete"),
-      Menu.param[Post]("PublishBlogEntry", S ? "PUBLISH_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "publish" >> Hidden >> ACL.locParam("blog/publish")))
+      Menu.param[Post]("PublishBlogEntry", S ? "PUBLISH_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "publish" >> Hidden >> ACL.locParam("blog/publish"),
+      Menu.param[Post]("TranslateBlogEntry", S ? "TRANSLATE_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "translate" >> Hidden >> ACL.locParam("blog/translate")))
 
   override def init {
     super.init

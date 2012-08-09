@@ -68,6 +68,7 @@ class BlogPost(post: PostContent) {
             "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
             "data-lift-id=text" #> Unparsed(post.text.is) &
             "data-lift-id=manage *" #> {
+              "data-lift-id=translate [href]" #> metaPost.map(p => "/blog/translate/%s".format(p.id.is)) &
               "data-lift-id=publish [onclick]" #> SHtml.onEvent(s => publish(post)) &
                 "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
             } & (metaPost match {

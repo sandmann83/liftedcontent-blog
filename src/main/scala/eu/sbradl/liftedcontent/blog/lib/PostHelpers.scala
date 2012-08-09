@@ -1,9 +1,7 @@
 package eu.sbradl.liftedcontent.blog.lib
 
 import eu.sbradl.liftedcontent.blog.model.PostContent
-
 import scala.xml.Text
-
 import net.liftweb.common.Box.option2Box
 import net.liftweb.common.Full
 import net.liftweb.http.S
@@ -15,6 +13,8 @@ import net.liftweb.mapper.OprEnum
 import net.liftweb.mapper.OrderBy
 import net.liftmodules.textile.TextileParser
 import net.liftweb.util.Helpers.urlEncode
+import net.liftweb.mapper.StartAt
+import net.liftweb.mapper.MaxRows
 
 object PostHelpers {
 
@@ -27,6 +27,13 @@ object PostHelpers {
       By(PostContent.published, true),
       OrderBy(PostContent.createdAt, Descending))
   }
+  
+  def latest(n: Int): List[PostContent] = PostContent.findAll(
+		  By(PostContent.published, true),
+		  By(PostContent.language, S.locale.getLanguage),
+		  OrderBy(PostContent.createdAt, Descending),
+		  StartAt(1),
+		  MaxRows(n))
   
   def plainText(post: PostContent) = TextileParser.toHtml(post.title.is).text + ": " + TextileParser.toHtml(post.text.is).text
   def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text.is).text
