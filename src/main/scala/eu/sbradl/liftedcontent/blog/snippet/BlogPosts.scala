@@ -11,7 +11,7 @@ import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
-import net.liftweb.textile.TextileParser
+import net.liftmodules.textile.TextileParser
 
 class BlogPosts {
   

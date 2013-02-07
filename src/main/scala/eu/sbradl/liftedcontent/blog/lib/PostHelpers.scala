@@ -1,9 +1,7 @@
 package eu.sbradl.liftedcontent.blog.lib
 
 import eu.sbradl.liftedcontent.blog.model.PostContent
-
 import scala.xml.Text
-
 import net.liftweb.common.Box.option2Box
 import net.liftweb.common.Full
 import net.liftweb.http.S
@@ -13,8 +11,8 @@ import net.liftweb.mapper.Cmp
 import net.liftweb.mapper.Descending
 import net.liftweb.mapper.OprEnum
 import net.liftweb.mapper.OrderBy
-import net.liftweb.textile.TextileParser
 import net.liftweb.util.Helpers.urlEncode
+import net.liftmodules.textile.TextileParser
 
 object PostHelpers {
 

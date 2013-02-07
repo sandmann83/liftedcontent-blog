@@ -11,12 +11,12 @@ import scala.xml.Text
 import java.text.DateFormat
 import eu.sbradl.liftedcontent.blog.model.Comment
 import java.util.Date
-import net.liftweb.textile.TextileParser
 import scala.xml.NodeSeq
 import eu.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
 import eu.sbradl.liftedcontent.microformats.snippet.Atom
+import net.liftmodules.textile.TextileParser
 
 class BlogPost(post: PostContent) {
 
