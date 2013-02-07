@@ -33,7 +33,7 @@ class SearchBlogPost {
     val autoComplete = AutoComplete((current: String) => {
       val posts = PostHelpers.searchFor(current)
       
-      posts map (post => (post.title.is, PostHelpers.plainText(post)))
+      posts map (_.title.is)
     })
 
     val name = autoComplete.inputName

@@ -17,12 +17,12 @@ object BlogRssFeed extends RestHelper {
         By(PostContent.language, S.locale.getLanguage),
         OrderBy(PostContent.createdAt, Descending))
 
-      RssFeed[PostContent](S.hostName + " Blog", S.hostAndPath, 
-          S.hostName + " Blog", S.locale.toString, posts.head.translator.open_!.name, 
-          posts, _.title, PostHelpers.summary(_, 2, 200).text,
-          S.hostAndPath + PostHelpers.linkTo(_), 
-          p => "%s, %s".format(p.translator.open_!.name, p.translator.open_!.email), 
-          p => LiftRules.dateTimeConverter.vend.formatDateTime(p.createdAt))
+      RssFeed[PostContent](S.hostName + " Blog", S.hostAndPath,
+        S.hostName + " Blog", S.locale.toString, posts.head.translator.map(_.name).openOr("Unknown"),
+        posts, _.title.get, PostHelpers.summary(_, 2, 200),
+        S.hostAndPath + PostHelpers.linkTo(_),
+        p => "%s, %s".format(p.translator.map(_.name).openOr("Unknown"), p.translator.map(_.email).openOr("Unknown")),
+        p => LiftRules.dateTimeConverter.vend.formatDateTime(p.createdAt.get))
     }
   }
 }

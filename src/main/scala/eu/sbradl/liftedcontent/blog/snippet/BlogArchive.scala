@@ -40,7 +40,11 @@ class BlogArchive {
     } 
 
     val groupedPosts = SortedMap[Int, List[PostContent]]() ++ posts.groupBy(post => {
-      val spanBetween: TimeSpan = (now: TimeSpan) - post.createdAt.is
+      val calendarNow = Calendar.getInstance(S.locale)
+      calendarNow.setTime(now)
+      calendarNow.set(Calendar.DAY_OF_MONTH, 1)
+      
+      val spanBetween: TimeSpan = calendarNow.getTime() - post.createdAt.is
       calendar.setTime(spanBetween.date)
       calendar.get(Calendar.MONTH)
     })
@@ -51,12 +55,12 @@ class BlogArchive {
     }
 
     "* *" #> postSelection.map {
-      kv =>
+      case (monthsAgo, posts) =>
         {
-          val post = kv._2.head
+          val post = posts.head
 
-          "data-lift-id=header *" #> month(post.createdAt) &
-            "data-lift-id=item" #> kv._2.map {
+          "data-lift-id=header *" #> month(post.createdAt.get) &
+            "data-lift-id=item" #> posts.map {
               post =>
                 {
                   "* * " #> <a href={ PostHelpers.linkTo(post) }>{ post.title.is }</a>

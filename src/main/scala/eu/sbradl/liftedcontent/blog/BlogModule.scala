@@ -26,6 +26,11 @@ import net.liftweb.util.Helpers.urlDecode
 import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.util.NamedPF
 import eu.sbradl.liftedcontent.blog.lib.BlogRssFeed
+import net.liftweb.http.Req
+import eu.sbradl.liftedcontent.core.model.User
+import net.liftweb.util.Helpers._
+import eu.sbradl.liftedcontent.blog.lib.BlogServices
+import eu.sbradl.liftedcontent.core.lib.AdditionalUrls
 
 class BlogModule extends Module {
 
@@ -33,9 +38,9 @@ class BlogModule extends Module {
 
   override def menus = List(
     Menu.param[PostContent]("BLOG", 
-        new LinkText(p => Text(p.title)), 
+        new LinkText(p => Text(p.title.is)), 
         url => PostContent.find(By(PostContent.title, urlDecode(url))), 
-        p => urlEncode(p.title)) / "blog",
+        p => urlEncode(p.title.is)) / "blog",
         
     Menu.i("BLOG_ARCHIVE") / "blog" / "archive" >> LocGroup("primary") >> ACL.locParam("blog/archive"),
     
@@ -47,11 +52,14 @@ class BlogModule extends Module {
     Menu.i("BLOG_OVERVIEW") / "blog" / "index" >> LocGroup("primary") >> ACL.locParam("blog/index") submenus (
       Menu.i("POST_BLOG_ENTRY") / "blog" / "post" >> LocGroup("primary") >> ACL.locParam("blog/post"),
       Menu.param[Post]("CommentBlogEntry", S ? "WRITE_COMMENT", Post.find, _.id.is.toString) / "blog" / "comment" >> Hidden >> ACL.locParam("blog/comment"),
-      Menu.param[Post]("EditBlogEntry", S ? "EDIT_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "edit" >> Hidden >> ACL.locParam("blog/edit"),
-      Menu.param[Post]("DeleteBlogEntry", S ? "DELETE_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "delete" >> Hidden >> ACL.locParam("blog/delete")))
+      Menu.param[Post]("DeleteBlogEntry", S ? "DELETE_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "delete" >> Hidden >> ACL.locParam("blog/delete"),
+      Menu.param[Post]("PublishBlogEntry", S ? "PUBLISH_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "publish" >> Hidden >> ACL.locParam("blog/publish"),
+      Menu.param[Post]("TranslateBlogEntry", S ? "TRANSLATE_BLOG_ENTRY", Post.find, _.id.is.toString) / "blog" / "translate" >> Hidden >> ACL.locParam("blog/translate")))
 
   override def init {
     super.init
+    
+    AdditionalUrls.urlCalculators.append(() => PostContent.findAll.map(PostHelpers.linkTo(_).replaceFirst("/", "")))
 
     LiftRules.statefulRewrite.prepend(NamedPF("LatestBlogPostRewrite") {
       case RewriteRequest(
@@ -62,5 +70,11 @@ class BlogModule extends Module {
     })
     
     LiftRules.dispatch.append(BlogRssFeed)
+    
+    val onlyAsSuperUser: PartialFunction[Req, Unit] = {
+      case _ if User.currentUser.map(_.superUser.is).openOr(false) =>
+    }
+
+    LiftRules.dispatch.append(onlyAsSuperUser guard BlogServices)
   }
 }

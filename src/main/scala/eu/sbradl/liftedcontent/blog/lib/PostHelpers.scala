@@ -11,8 +11,18 @@ import net.liftweb.mapper.Cmp
 import net.liftweb.mapper.Descending
 import net.liftweb.mapper.OprEnum
 import net.liftweb.mapper.OrderBy
+<<<<<<< HEAD
 import net.liftweb.util.Helpers.urlEncode
 import net.liftmodules.textile.TextileParser
+=======
+import net.liftmodules.textile.TextileParser
+import net.liftweb.util.Helpers.urlEncode
+import net.liftweb.mapper.StartAt
+import net.liftweb.mapper.MaxRows
+import scala.xml.Unparsed
+import eu.sbradl.liftedcontent.util.WordDensity
+import scala.collection.immutable.SortedMap
+>>>>>>> a9166a7a6e73d31f0b5a012c3928d731edb7ac4d
 
 object PostHelpers {
 
@@ -26,16 +36,23 @@ object PostHelpers {
       OrderBy(PostContent.createdAt, Descending))
   }
   
-  def plainText(post: PostContent) = TextileParser.toHtml(post.title).text + ": " + TextileParser.toHtml(post.text).text
-  def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text).text
+  def latest(n: Int): List[PostContent] = PostContent.findAll(
+		  By(PostContent.published, true),
+		  By(PostContent.language, S.locale.getLanguage),
+		  OrderBy(PostContent.createdAt, Descending),
+		  StartAt(1),
+		  MaxRows(n))
+  
+//  def plainText(post: PostContent) = TextileParser.toHtml(post.title.is).text + ": " + TextileParser.toHtml(post.text.is).text
+  def plainTextWithoutTitle(post: PostContent) = TextileParser.toHtml(post.text.is).text
 
-  def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title)
+  def linkTo(post: PostContent) = "/blog/" + urlEncode(post.title.is)
 
   def searchFor(term: String) = {
     val results = searchForTitle(term) ++ searchForText(term)
     val posts = results.distinct
     
-    posts.sortBy(post => post.title.split(term).size + post.text.split(term).size) reverse
+    posts.sortBy(post => post.title.is.split(term).size + post.text.is.split(term).size) reverse
   }
 
   private def searchForTitle(term: String) = PostContent.findAll(
@@ -47,7 +64,7 @@ object PostHelpers {
     Cmp(PostContent.text, OprEnum.Like, Full("%" + term.toLowerCase + "%"), None, Full("lower")))
 
   def summary(post: PostContent, desiredSentences: Int = 3, maxCharacters: Int = 100) = {
-    val fullText = post.text.is
+    val fullText = plainText(post)
 
     val punctuationMarks = List('.', '!', '?')
 
@@ -76,7 +93,21 @@ object PostHelpers {
       summary = summary + "..."
     }
 
-    Text(TextileParser.toHtml(summary).text)
+    summary
   }
+  
+  def keywords(post: PostContent, maxNumKeywords: Int = 5): List[String] = {
+    var densities = WordDensity.forText(plainText(post))
+   
+    def filterWordsStartingWithALetter(words: Map[String, Int]) = {
+      words.filterKeys(w => w.charAt(0).isLetter)
+    }
+    
+    densities = filterWordsStartingWithALetter(densities)
+    
+    densities.toList.sortBy(_._2).takeRight(maxNumKeywords).map(_._1)
+  }
+  
+  def plainText(post: PostContent) = post.text.is.replaceAll("""<(?!\/?(?=>|\s.*>))\/?.*?>""", " ").trim
 
 }

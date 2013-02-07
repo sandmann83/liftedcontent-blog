@@ -15,8 +15,16 @@ import scala.xml.NodeSeq
 import eu.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
+<<<<<<< HEAD
 import eu.sbradl.liftedcontent.microformats.snippet.Atom
 import net.liftmodules.textile.TextileParser
+=======
+import net.liftweb.util.ClearNodes
+import net.liftweb.common.Full
+import net.liftweb.common.Box
+import net.liftweb.util.PassThru
+import scala.xml.Unparsed
+>>>>>>> a9166a7a6e73d31f0b5a012c3928d731edb7ac4d
 
 class BlogPost(post: PostContent) {
 
@@ -25,46 +33,57 @@ class BlogPost(post: PostContent) {
   def render = {
     dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT, S.locale)
 
-    "*" #> Atom.entry &
     "* *" #> renderPost(post)
   }
 
-  def editLink(id: Long) = "/blog/edit/" + id.toString
+  def publish(post: PostContent): JsCmd = {
+    post.published(true)
+    post.save
+
+    S.notice(S ? "POST_PUBLISHED")
+  }
 
   def delete(post: PostContent): JsCmd = {
-	post.delete_!
-	
-	S.notice(S ? "ENTRY_DELETED")
-	
-	S.redirectTo("/")
+    post.delete_!
+
+    S.notice(S ? "ENTRY_DELETED")
+
+    S.redirectTo("/")
   }
 
   def renderPost(post: PostContent) = {
-    val metaPost = post.post.obj.open_!
-    val author = metaPost.author.obj.open_!
+    if (post.published.is == false && !User.currentUser.map(_.superUser.is).openOr(false)) {
+      "*" #> ClearNodes
+    } else {
+      val metaPost = post.post.obj
+      val authorBox = metaPost.map(_.author.obj)
 
-    val status = post.published.is match {
-      case true => S ? "BLOG_ENTRY_STATUS_PUBLISHED"
-      case false => S ? "BLOG_ENTRY_STATUS_UNPUBLISHED"
+      val status = post.published.is match {
+        case true => S ? "BLOG_ENTRY_STATUS_PUBLISHED"
+        case false => S ? "BLOG_ENTRY_STATUS_UNPUBLISHED"
+      }
+
+      authorBox match {
+        case Full(Full(author)) => {
+          "data-lift-id=title [id]" #> post.id.is &
+            "data-lift-id=title *" #> post.title.is &
+            "data-lift-id=author *" #> author.name &
+            "data-lift-id=translator *" #> post.translator.obj.map(_.name).openOr("Unknown") &
+            "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
+            "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
+            "data-lift-id=text" #> Unparsed(post.text.is) &
+            "data-lift-id=manage *" #> {
+              "data-lift-id=translate [href]" #> metaPost.map(p => "/blog/translate/%s".format(p.id.is)) &
+              "data-lift-id=publish [onclick]" #> SHtml.onEvent(s => publish(post)) &
+                "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
+            } & (metaPost match {
+              case Full(mp) => renderComments(mp)
+              case _ => "*" #> PassThru
+            })
+        }
+        case _ => ClearNodes
+      }
     }
-
-    "data-lift-id=title *" #> post.title.is &
-    Atom.title("data-lift-id=title") &
-      "data-lift-id=manage *" #> {
-        "data-lift-id=edit [href]" #> editLink(metaPost.id.is) &
-          "data-lift-id=delete [onclick]" #> OnConfirm(S ? "REALLY_DELETE_POST", () => delete(post))
-      } &
-      "data-lift-id=author *" #> author.name &
-      Atom.author("data-lift-id=author") &
-      "data-lift-id=translator *" #> post.translator.obj.open_!.name &
-      "data-lift-id=createdAt *" #> dateFormat.format(post.createdAt.is) &
-      Atom.published("data-lift-id=createdAt", dateFormat.format(post.createdAt.is)) &
-      "data-lift-id=updatedAt *" #> dateFormat.format(post.updatedAt.is) &
-      Atom.updated("data-lift-id=updatedAt", dateFormat.format(post.updatedAt.is)) &
-      "data-lift-id=text" #> TextileParser.toHtml(post.text.is) &
-      Atom.content &
-      renderComments(metaPost)
-
   }
 
   def renderComments(metaPost: Post) = metaPost.comments.isEmpty match {
