@@ -15,16 +15,12 @@ import scala.xml.NodeSeq
 import eu.sbradl.liftedcontent.util.OnConfirm
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.js.JsCmd
-<<<<<<< HEAD
 import eu.sbradl.liftedcontent.microformats.snippet.Atom
 import net.liftmodules.textile.TextileParser
-=======
 import net.liftweb.util.ClearNodes
 import net.liftweb.common.Full
-import net.liftweb.common.Box
-import net.liftweb.util.PassThru
 import scala.xml.Unparsed
->>>>>>> a9166a7a6e73d31f0b5a012c3928d731edb7ac4d
+import net.liftweb.util.PassThru
 
 class BlogPost(post: PostContent) {
 

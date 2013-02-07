@@ -11,18 +11,11 @@ import net.liftweb.mapper.Cmp
 import net.liftweb.mapper.Descending
 import net.liftweb.mapper.OprEnum
 import net.liftweb.mapper.OrderBy
-<<<<<<< HEAD
 import net.liftweb.util.Helpers.urlEncode
 import net.liftmodules.textile.TextileParser
-=======
-import net.liftmodules.textile.TextileParser
-import net.liftweb.util.Helpers.urlEncode
 import net.liftweb.mapper.StartAt
 import net.liftweb.mapper.MaxRows
-import scala.xml.Unparsed
 import eu.sbradl.liftedcontent.util.WordDensity
-import scala.collection.immutable.SortedMap
->>>>>>> a9166a7a6e73d31f0b5a012c3928d731edb7ac4d
 
 object PostHelpers {
 
